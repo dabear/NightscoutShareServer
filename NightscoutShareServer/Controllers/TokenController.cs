@@ -8,31 +8,31 @@ namespace NighscoutShareServer.Controllers
 {
     public class TokenController : Controller
     {
+
+
         [HttpPost]
         [HttpGet]
         public ActionResult Index(string accountName, string password, string applicationId)
         {
 
-            var guid = Guid.NewGuid();
 
-            return Json(
-                guid.ToString(), JsonRequestBehavior.AllowGet
-
-            );
-        }
-        public ActionResult Index()
-        {
-
-
-
-
-            return Json(
+            if (accountName?.Length < 0 || password?.Length < 0 || applicationId?.Length < 0)
+            {
+                return Json(
                 new
                 {
                     Error = "true",
                     Message = "You should specify an accountname, password and applicationid in a post to this endpoint"
                 },
                 JsonRequestBehavior.AllowGet);
+            }
+
+            var g = Guid.NewGuid();
+            return Json(new
+            {
+                g
+            });
+
         }
 
         public ActionResult Details(int id)
