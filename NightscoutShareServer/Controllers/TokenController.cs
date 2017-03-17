@@ -4,19 +4,23 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace NighscoutShareServer.Controllers
+namespace NightscoutShareServer.Controllers
 {
     public class TokenController : Controller
     {
+        /*public ActionResult Index()
+        {
+            return View();
+        }*/
 
+        private static bool IsNullOrDefault<T>(T value)
+        {
+            return object.Equals(value, default(T));
+        }
 
-        [HttpPost]
-        [HttpGet]
         public ActionResult Index(string accountName, string password, string applicationId)
         {
-
-
-            if (accountName?.Length < 0 || password?.Length < 0 || applicationId?.Length < 0)
+            if (IsNullOrDefault(accountName) || IsNullOrDefault(password) || IsNullOrDefault(applicationId))
             {
                 return Json(
                 new
@@ -28,11 +32,7 @@ namespace NighscoutShareServer.Controllers
             }
 
             var g = Guid.NewGuid();
-            return Json(new
-            {
-                g
-            });
-
+            return Json(g, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult Details(int id)

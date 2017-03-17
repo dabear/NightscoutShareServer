@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Mvc.Ajax;
 
-namespace NighscoutShareServer.Controllers
+namespace NightscoutShareServer.Controllers
 {
     public class HomeController : Controller
     {
