@@ -3,6 +3,8 @@ using NightscoutShareServer.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
 using System.Web;
 using System.Web.Mvc;
 
@@ -44,6 +46,15 @@ namespace NightscoutShareServer.Controllers
             return glucose;
         }
 
+        private NightscoutPebble fetchNightscoutPebbleData(string baseurl, int count = 3)
+        {
+            var url = $"{baseurl}/pebble?count={count}&units=mgdl";
+            var client = new WebClient();
+
+            var contents = client.DownloadString(url);
+            return JsonConvert.DeserializeObject<NightscoutPebble>(contents);
+        }
+
         public ActionResult Index(string sessionId, string minutes, string maxCount)
         {
             //the minutes parameter is often 1440 (24 hours), telling you how long back you should do the search
@@ -58,9 +69,32 @@ namespace NightscoutShareServer.Controllers
                 return Json("Some error validating sessionid!!", JsonRequestBehavior.AllowGet);
             }
 
-            var glucose = mockupGlucoseValues();
+            //var glucose = mockupGlucoseValues();
+            var nsglucose = this.fetchNightscoutPebbleData("https://XXXXX.azurewebsites.net", count);
+            var shareglucose = new List<ShareGlucose>();
 
-            return Content(this.encodeGlucose(glucose), "application/json");
+            foreach (var entry in nsglucose.bgs)
+            {
+                var glucosedate = DateTimeOffset.FromUnixTimeMilliseconds(entry.datetime).DateTime;
+                decimal val;
+                Decimal.TryParse(entry.sgv, out val);
+
+                var trend = SlopeConvert.NsDirectionToShareTrend(entry.direction);
+
+                shareglucose.Add(
+                new ShareGlucose
+                {
+                    DT = glucosedate,
+                    ST = glucosedate,
+                    WT = glucosedate.ToUniversalTime(),
+                    Value = (int)val,
+                    Trend = trend
+                }
+
+                );
+            }
+
+            return Content(this.encodeGlucose(shareglucose), "application/json");
         }
     }
 }
