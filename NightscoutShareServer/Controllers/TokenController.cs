@@ -8,90 +8,46 @@ namespace NightscoutShareServer.Controllers
 {
     public class TokenController : Controller
     {
-        /*public ActionResult Index()
+        private bool checkValidUser(string accountName, string password, string applicationId)
         {
-            return View();
-        }*/
+            if (accountName.Length == 0 || password.Length == 0 || applicationId.Length == 0)
+            {
+                return false;
+            }
 
-        private static bool IsNullOrDefault<T>(T value)
+            //future: do additional checks here
+            //For now we just allow any combination of username and password
+            return true;
+        }
+
+        private Guid createGuidAndStoreIt()
         {
-            return object.Equals(value, default(T));
+            var g = Guid.NewGuid();
+            //future: store the guid somewhere
+            //For now we don't have any authentication, and accept any guid/sessionid for retrieving glucose
+            //so just return it!
+
+            return g;
         }
 
         public ActionResult Index(string accountName, string password, string applicationId)
         {
-            if (IsNullOrDefault(accountName) || IsNullOrDefault(password) || IsNullOrDefault(applicationId))
+            accountName = accountName ?? "";
+            password = password ?? "";
+            applicationId = applicationId ?? "";
+
+            if (this.checkValidUser(accountName, password, applicationId))
             {
-                return Json(
+                return Json(this.createGuidAndStoreIt(), JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(
                 new
                 {
                     Error = "true",
                     Message = "You should specify an accountname, password and applicationid in a post to this endpoint"
                 },
                 JsonRequestBehavior.AllowGet);
-            }
-
-            var g = Guid.NewGuid();
-            return Json(g, JsonRequestBehavior.AllowGet);
-        }
-
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        public ActionResult Create(FormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
         }
     }
 }

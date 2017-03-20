@@ -2,4 +2,29 @@
     ViewBag.Title = "Home Page";
 }
 
-<p>Welcome to NightscoutShareServer, running on @ViewData["Runtime"]!</p>
+<div>
+    <h1>Welcome to NightscoutShareServer</h1>
+    <p>This is a custom server that behaves like a Dexcom Share server, but will fetch its glucose values from nightscout</p>
+    <p>If you're a nightscout user, you may have heared of the "Dexcom Bridge". This server does the reverse.</p>
+    <p>
+        If you don't want Dexcom to hold a copy of your glucose data on their share system,
+        but still want to use the ios app Loop to fetch glucose data from an online source, you can compile Loop with a custom web server.
+    </p>
+
+    <p>
+        To do this, open the file "Loop/Loop/Managers/KeychainManager+Loop.swift", locate the line with the DexcomShareUrl:
+        </p>
+    <img src="@Url.Content("~/Content/loop-source-change-url.png")" width="400" />
+    <p>
+        
+        Change it to use this server as a replacement:
+    </p>
+
+    <code>
+        private let DexcomShareURL = URL(string: "@Request.Url.GetLeftPart(UriPartial.Authority)")!
+    </code>
+
+    <p>
+        Recompile the Loop app, and you're all set to go
+    </p>
+</div>
