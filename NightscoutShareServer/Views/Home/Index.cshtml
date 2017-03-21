@@ -28,11 +28,12 @@
 
     <h2>Step 2: Change shareurl in the fork</h2>
     <p>
-        You should change the share url in yourgithub/swift-client to the following url:
+        Go to your forked version at github.ocm/yourgithubuser/dexcom-share-client-swift/blob/master/ShareClient/ and edit the file ShareClient.swift.
+        Find the dexcom share variable for the US servers and change it to match this customserver instead, like this:
+        
         
     </p>
-    <code>@Request.Url.GetLeftPart(UriPartial.Authority)</code>
-    <p><strong>IMPORTANT</strong>! Also remember to increase the version number of your fork, to for example 0.2<strong>.1</strong> </p>
+    <code>private let dexcomServerUS = "@Request.Url.GetLeftPart(UriPartial.Authority)"</code>
     
     <h2>Step 3: tell Loop to use your custom swift-shareclient</h2>
     <p>
@@ -40,10 +41,19 @@
     </p>
     <code>github "mddub/dexcom-share-client-swift" ~> 0.2.0</code>
     <p>change it to:</p>
-    <code>github "yourgithubuser/dexcom-share-client-swift" ~> 0.2<strong>.1</strong></code>
+    <code>github "yourgithubuser/dexcom-share-client-swift" "master"</code>
 
+    <p>On your mac, open a terminal and navigate to the folder where you have your loop project. 
+        You should now issue an update to the dexcom-share-client-swift-module in your terminal.
+        Example:
+    </p>
+    <code>
+    cd /Users/bjorninge/Projects/Loop;
+    carthage update dexcom-share-client-swift
+    </code>
     <p>
         Recompile the Loop app, and you're all set to go
+        Your customserver should now be build and running, trit it out! It will accept any combination of username and password.
     </p>
 </div>
 
