@@ -7,24 +7,67 @@
     <p>This is a custom server that behaves like a Dexcom Share server, but will fetch its glucose values from nightscout</p>
     <p>If you're a nightscout user, you may have heared of the "Dexcom Bridge". This server does the reverse.</p>
     <p>
-        If you don't want Dexcom to hold a copy of your glucose data on their share system,
-        but still want to use the ios app Loop to fetch glucose data from an online source, you can compile Loop with a custom web server.
+        By using this custom shareserver, you can use any CGM together with Loop, as long as your cgm data is uploaded to nightscout.
+        A consequence is that you don't have to store your glucose data on Dexcom's servers
     </p>
 
+    <h2>Step 0: check integration against nightscout</h2>
     <p>
-        To do this, open the file "Loop/Loop/Managers/KeychainManager+Loop.swift", locate the line with the DexcomShareUrl:
-        </p>
-    <img src="@Url.Content("~/Content/loop-source-change-url.png")" width="400" />
+        Please verify that the integration against nightscout is working, click this button
+    </p>
+    <button id="loadglucose" value="Load Glucose">Load glucose</button>
+    <button id="hideglucose" value="Hide glucose" style="visibility:hidden">Hide glucose</button>
+    <div id="glucoseinfo">
+
+    </div>
+    <h2>Step1: Fork the swift shareclient on github</h2>
     <p>
+        (TODO: better description)
+        Fork the swift shareclient into your own repository on github
+    </p>
+
+    <h2>Step 2: Change shareurl in the fork</h2>
+    <p>
+        You should change the share url in yourgithub/swift-client to the following url:
         
-        Change it to use this server as a replacement:
     </p>
-
-    <code>
-        private let DexcomShareURL = URL(string: "@Request.Url.GetLeftPart(UriPartial.Authority)")!
-    </code>
+    <code>@Request.Url.GetLeftPart(UriPartial.Authority)</code>
+    <p><strong>IMPORTANT</strong>! Also remember to increase the version number of your fork, to for example 0.2<strong>.1</strong> </p>
+    
+    <h2>Step 3: tell Loop to use your custom swift-shareclient</h2>
+    <p>
+        Locate your Carthage dependencies file at  Loop/Cartfile and change the following to match your new repo
+    </p>
+    <code>github "mddub/dexcom-share-client-swift" ~> 0.2.0</code>
+    <p>change it to:</p>
+    <code>github "yourgithubuser/dexcom-share-client-swift" ~> 0.2<strong>.1</strong></code>
 
     <p>
         Recompile the Loop app, and you're all set to go
     </p>
 </div>
+
+@section Scripts {
+    <script>
+        var url = "@Url.Action("Index", "Glucose")";
+        var $loadglucose = $("#loadglucose"),
+            $glucoseinfo = $("#glucoseinfo"),
+            $hideglucose = $("#hideglucose");
+
+        $hideglucose.click(function () {
+            $glucoseinfo.find("table").remove();
+
+        });
+
+        $loadglucose.click(function () {
+            $.getJSON(url, function (data) {
+                $glucoseinfo.find("table").remove();
+                var pretty = prettyPrint(data, { maxDepth: 5 })
+                $glucoseinfo.append(pretty);
+                $hideglucose.css("visibility", "visible")
+
+
+            })
+        });
+    </script>
+}
