@@ -3,3 +3,7 @@
 ################################################################################
 
 /NightscoutShareServer/obj/Debug
+/NightscoutShareServer/obj/Release
+/NightscoutShareServer/bin
+/NightscoutShareServer/Properties
+/.vs/

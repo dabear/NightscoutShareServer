@@ -68,16 +68,22 @@
             $glucoseinfo.find("table").remove();
 
         });
+        
 
         $loadglucose.click(function () {
-            $.getJSON(url, function (data) {
-                $glucoseinfo.find("table").remove();
-                var pretty = prettyPrint(data, { maxDepth: 5 })
-                $glucoseinfo.append(pretty);
-                $hideglucose.css("visibility", "visible")
-
-
-            })
+            $.ajax({
+                url: url,
+                dataType: 'json',
+                success: function (data) {
+                    $glucoseinfo.find("table").remove();
+                    var pretty = prettyPrint(data, { maxDepth: 5 })
+                    $glucoseinfo.append(pretty);
+                    $hideglucose.css("visibility", "visible")
+                },
+                error: function (data, status, error) {
+                    alert("Could not retrieve glucose data, please verify your nightscout url:  " + status + ", " + error);
+                }
+            });
         });
     </script>
 }
