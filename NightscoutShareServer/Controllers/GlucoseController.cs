@@ -70,7 +70,26 @@ namespace NightscoutShareServer.Controllers
             }
 
             //var glucose = mockupGlucoseValues();
-            var nsglucose = this.fetchNightscoutPebbleData("https://XXXXX.azurewebsites.net", count);
+            NightscoutPebble nsglucose = null;
+            Exception lasterror = null;
+            var i = 0;
+            do
+            {
+                try
+                {
+                    nsglucose = this.fetchNightscoutPebbleData("https://XXXXX.azurewebsites.net", count);
+                }
+                catch (Exception err)
+                {
+                    lasterror = err;
+                }
+
+            } while (i++ < 2);
+
+            if(lasterror != null)
+            {
+                throw lasterror;
+            }
             var shareglucose = new List<ShareGlucose>();
 
             foreach (var entry in nsglucose.bgs)
