@@ -171,6 +171,7 @@
     </Content>
     <None Include="Properties\PublishProfiles\bjorningedia2shareserver - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\bjorningedia3shareserver - Web Deploy.pubxml" />
+    <Content Include="README.md" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
