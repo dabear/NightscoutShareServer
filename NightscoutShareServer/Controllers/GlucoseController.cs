@@ -40,7 +40,7 @@ namespace NightscoutShareServer.Controllers
             );
 
             glucose.Add(
-                new ShareGlucose { DT = now, ST = now, WT = now.ToUniversalTime(), Trend = ShareGlucoseSlopeOrdinals.UP_45, Value = 163 }
+                new ShareGlucose { DT = threeminsago , ST = threeminsago , WT = threeminsago.ToUniversalTime(), Trend = ShareGlucoseSlopeOrdinals.UP_45, Value = 163 }
             );
 
             return glucose;
@@ -78,6 +78,7 @@ namespace NightscoutShareServer.Controllers
                 try
                 {
                     nsglucose = this.fetchNightscoutPebbleData("https://XXXXX.azurewebsites.net", count);
+                    lasterror=null;
                 }
                 catch (Exception err)
                 {
