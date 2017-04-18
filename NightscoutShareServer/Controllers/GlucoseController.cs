@@ -69,7 +69,14 @@ namespace NightscoutShareServer.Controllers
                 return Json("Some error validating sessionid!!", JsonRequestBehavior.AllowGet);
             }
 
-            //var glucose = mockupGlucoseValues();
+            if (Config.EnableMockedGlucoseMode)
+            {
+                var glucose = mockupGlucoseValues();
+                return Content(this.encodeGlucose(glucose), "application/json");
+            }
+
+
+           
             NightscoutPebble nsglucose = null;
             Exception lasterror = null;
             var i = 0;
@@ -77,7 +84,7 @@ namespace NightscoutShareServer.Controllers
             {
                 try
                 {
-                    nsglucose = this.fetchNightscoutPebbleData("https://XXXXX.azurewebsites.net", count);
+                    nsglucose = this.fetchNightscoutPebbleData(Config.NsHost, count);
                     lasterror=null;
                 }
                 catch (Exception err)
