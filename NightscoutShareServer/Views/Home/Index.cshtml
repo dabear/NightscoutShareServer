@@ -64,9 +64,10 @@
 @section Scripts {
     <script>
         var url = "@Url.Action("Index", "Glucose")";
-        //nightscout site is unused here but included just so you can verify that the environment setting worked
+        //nightscoutSite is unused here but included just so you can verify that the environment setting worked
         var nightscoutSite = "@NightscoutShareServer.Utils.Config.NsHost";
-        var enableMockedMode = "@NightscoutShareServer.Utils.Config.EnableMockedGlucoseMode";
+        //enableMockedMode is unused here but included just so you can verify that the environment setting worked
+        var enableMockedMode = "@NightscoutShareServer.Utils.Config.EnableMockedGlucoseMode" === "True";
         var $loadglucose = $("#loadglucose"),
             $glucoseinfo = $("#glucoseinfo"),
             $hideglucose = $("#hideglucose");
