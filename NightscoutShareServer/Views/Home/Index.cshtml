@@ -66,7 +66,7 @@
         var url = "@Url.Action("Index", "Glucose")";
         //nightscoutSite is unused here but included just so you can verify that the environment setting worked
         var nightscoutSite = "@NightscoutShareServer.Utils.Config.NsHost";
-        //enableMockedMode is unused here but included just so you can verify that the environment setting worked
+        
         var enableMockedMode = "@NightscoutShareServer.Utils.Config.EnableMockedGlucoseMode" === "True";
         var $loadglucose = $("#loadglucose"),
             $glucoseinfo = $("#glucoseinfo"),
@@ -87,6 +87,7 @@
                     var pretty = prettyPrint(data, { maxDepth: 5 })
                     $glucoseinfo.append(pretty);
                     $hideglucose.css("visibility", "visible")
+                    enableMockedMode && alert("These data are mocked (don't trust them)!");
                 },
                 error: function (data, status, error) {
                     alert("Could not retrieve glucose data, please verify your nightscout url:  " + status + ", " + error);
