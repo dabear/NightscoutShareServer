@@ -9,7 +9,7 @@ namespace NightscoutShareServer.Utils
     {
         
 
-        public static string NsHost => Environment.GetEnvironmentVariable("NS_Host") ?? "";
+        public static string NsHost => (Environment.GetEnvironmentVariable("NS_Host") ?? "").Trim('/');
         public static bool EnableMockedGlucoseMode => Environment.GetEnvironmentVariable("Enable_Mocked_Mode").ToLower() == "true";
     }
 }
