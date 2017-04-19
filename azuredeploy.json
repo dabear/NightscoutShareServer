@@ -30,9 +30,9 @@
 			],
 			"defaultValue": "0"
 		},
-		"nightscoutHostSite": {
+		"yourExistingNightscoutSite": {
 			"type": "string",
-			"defaultValue": "https://CHANGEME.azurewebsites.net/"
+			"defaultValue": "https://CHANGEME.azurewebsites.net"
 		},
 		"enableMockedMode": {
 			"type": "string",
@@ -86,7 +86,7 @@
 					"properties": {
 						"appSettings": [{
 								"name": "NS_Host",
-								"value": "[parameters('nightscoutHostSite')]"
+								"value": "[parameters('yourExistingNightscoutSite')]"
 							},
 							{
 								"name": "Enable_Mocked_Mode",
