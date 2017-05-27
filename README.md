@@ -34,4 +34,4 @@ Example from an azure portal:
 
 # 3) Changing Nighscout site
 
-To change to another nightscout site or enable mocked mode, follow the instructions provided in 2b) to change the appsettings in azure. Save your changes. You don't have to restart your app, settings are updated immediately.
+To change to another nightscout site or enable mocked mode, follow the instructions provided in 2b) to change the appsettings in azure. Save your changes. You don't have to restart your app. Settings are updated immediately; simply refresh your browser window
