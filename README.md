@@ -1,7 +1,9 @@
 # NightscoutShareServer
-This is a custom server that behaves like a Dexcom Share server, but will fetch its glucose values from nightscout
 
-If you're a nightscout user, you may have heared of the "Dexcom Bridge". This server does the reverse.
+This will install a web server program called NightscoutShareServer, that when installed, will live in parallel with your existing nightscout site. The NightscoutShareServer site then fetches it's glucose values from your configured nightscout site and formats it in the same manner as a dexcom server does.
+
+If you're a nightscout user, you may have heared of the "Dexcom Bridge", where dexcom data is pulled into the nightscout site.
+NightscoutShareServer however does the reverse; data from nightscout is fetched and transformed to confirm to the dexcomshareserver protocol.
 
 # Installation
 
