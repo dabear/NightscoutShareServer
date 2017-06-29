@@ -24,15 +24,14 @@
     <div id="glucoseinfo">
 
     </div>
-    <h2>Step1: Fork the swift shareclient on github</h2>
+    <h2>Step1: Fork the swift shareclient 0.2.1</h2>
     <p>
-        (TODO: better description)
-        Fork the swift shareclient into your own repository on github
+        go to <a href="https://github.com/dabear/dexcom-share-client/">https://github.com/dabear/dexcom-share-client/<a> and fork it into your own repo
     </p>
 
     <h2>Step 2: Change shareurl in the fork</h2>
     <p>
-        Go to your forked version at github.ocm/yourgithubuser/dexcom-share-client-swift/blob/master/ShareClient/ and edit the file ShareClient.swift.
+        Go to your forked version at https://github.com/YOUR_GITHUB_USERNAME_HERE/dexcom-share-client/blob/master/ShareClient/ and edit the file ShareClient.swift.
         Find the dexcom share variable for the US servers and change it to match this customserver instead, like this:
         
         
@@ -43,10 +42,13 @@
     <p>
         Locate your Carthage dependencies file at  Loop/Cartfile and change the following to match your new repo
     </p>
-    <code>github "mddub/dexcom-share-client-swift" ~> 0.2.0</code>
+    <code>github "mddub/dexcom-share-client-swift" ~> 0.2.1</code>
     <p>change it to:</p>
-    <code>github "yourgithubuser/dexcom-share-client-swift" "master"</code>
-
+    <code>github "YOUR_GITHUB_USERNAME_HERE/dexcom-share-client" "master"</code>
+    <p>
+      <img src="https://www.evernote.com/shard/s294/sh/4471fd4e-b937-4c87-835d-535138002166/cf169559463eddc0/res/068f16c4-a5bc-4a5e-acb9-d3a73620c498/skitch.png" width="300"/>
+    </p>
+    
     <p>On your mac, open a terminal and navigate to the folder where you have your loop project. 
         You should now issue an update to the dexcom-share-client-swift-module in your terminal.
         Example:
