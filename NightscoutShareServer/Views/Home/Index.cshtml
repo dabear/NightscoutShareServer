@@ -15,7 +15,7 @@
         A consequence is that you don't have to store your glucose data on Dexcom's servers
     </p>
 
-    <h2>Step 0: check integration against nightscout</h2>
+    <h2>Step 0 a): check integration against nightscout</h2>
     <p>
         Please verify that the integration against nightscout is working, click this button
     </p>
@@ -24,41 +24,24 @@
     <div id="glucoseinfo">
 
     </div>
-    <h2>Step1: Fork the swift shareclient 0.2.1</h2>
+    <h2>Step 0 a): Check Version of Loop. You must be running Loop 1.4.0 or later</h2>
     <p>
-        go to <a href="https://github.com/dabear/dexcom-share-client-swift/">https://github.com/dabear/dexcom-share-client-swift/</a> and fork it into your own repo
+        In Loop 1.4.0 ther were many changes to make selecting shareserver much easier
+    </p>
+    
+    <h2>Step1: shareserver location</h2>
+    <p>
+        Take a note of this address: @Request.Url.GetLeftPart(UriPartial.Authority). This is the address to your custom shareserver.
     </p>
 
-    <h2>Step 2: Change shareurl in the fork</h2>
+    <h2>Step 2: Add cusomt shareserver to Loop</h2>
     <p>
-        Go to your forked version at https://github.com/YOUR_GITHUB_USERNAME_HERE/dexcom-share-client/blob/master/ShareClient/ and edit the file ShareClient.swift.
-        Find the dexcom share variable for the US servers and change it to match this customserver instead, like this:
+        Open the Loop project directory and navigate to Loop/Models/ServiceAuthentication/ShareService.swift
+        There are comments inside the file describing how to add a new shareserver. Note that customServer variable should be set to the location you wrote down in step 1
         
         
     </p>
-    <code>private let dexcomServerUS = "@Request.Url.GetLeftPart(UriPartial.Authority)"</code>
-    
-    <h2>Step 3: tell Loop to use your custom swift-shareclient</h2>
-    <p>
-        Locate your Carthage dependencies file at  Loop/Cartfile and change the following to match your new repo
-    </p>
-    <code>github "mddub/dexcom-share-client-swift" ~> 0.2.1</code>
-    <p>change it to:</p>
-    <code>github "YOUR_GITHUB_USERNAME_HERE/dexcom-share-client-swift" "master"</code>
-    <p>
-    It should now look similar to this:
-    </p>
-      <img src="https://www.evernote.com/shard/s294/sh/bc176767-98a2-4057-bd4d-5c2d02bfe97e/dfa8faf370ae4946/res/9258af58-b855-488c-8a8d-d0453a607605/skitch.png" width="600"/>
-    </p>
-    
-    <p>On your mac, open a terminal and navigate to the folder where you have your loop project. 
-        You should now issue an update to the dexcom-share-client-swift-module in your terminal.
-        Example:
-    </p>
-    <code>
-    cd /Users/bjorninge/Projects/Loop;
-    carthage update dexcom-share-client-swift
-    </code>
+   
     <p>
         Recompile the Loop app, and you're all set to go
         Your customserver should now be build and running, trit it out! It will accept any combination of username and password.
