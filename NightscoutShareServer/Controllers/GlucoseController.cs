@@ -92,7 +92,7 @@ namespace NightscoutShareServer.Controllers
                     lasterror = err;
                 }
 
-            } while (i++ < 2);
+            } while (i++ < 2 && lasterror != null );
 
             if(lasterror != null)
             {
