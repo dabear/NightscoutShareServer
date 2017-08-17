@@ -62,7 +62,22 @@
             $glucoseinfo.find("table").remove();
 
         });
+        Number.prototype.round = function (places) {
+            return +(Math.round(this + "e+" + places) + "e-" + places);
+        }
 
+        function manipulateResponse(data) {
+            for (var key in data) {
+                if (data.hasOwnProperty(key)) {
+                    var mgdl = data[key].Value;
+                    var mmol = (mgdl / 18).round(1);
+                    delete data[key].Value;
+                    data[key]["Value (mgdl)"] = mgdl;
+                    data[key]["Value (mmol)"] = mmol;
+                }
+            }
+            return data;
+        }
 
         $loadglucose.click(function () {
             $.ajax({
@@ -70,7 +85,7 @@
                 dataType: 'json',
                 success: function (data) {
                     $glucoseinfo.find("table").remove();
-                    var pretty = prettyPrint(data, { maxDepth: 5 })
+                    var pretty = prettyPrint(manipulateResponse(data), { maxDepth: 5 })
                     $glucoseinfo.append(pretty);
                     $hideglucose.css("visibility", "visible")
                     enableMockedMode && alert("These data are mocked (don't trust them)!");
