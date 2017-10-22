@@ -74,6 +74,11 @@
                     delete data[key].Value;
                     data[key]["Value (mgdl)"] = mgdl;
                     data[key]["Value (mmol)"] = mmol;
+                    
+                    var wt=new Date(parseInt(data[key].WT.substr(6)));
+                    if(!isNaN(wt.getTime())) {
+                        data[key]["Locale DateTime"] = wt.toLocaleString();
+                    }
                 }
             }
             return data;
