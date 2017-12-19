@@ -55,6 +55,16 @@ namespace NightscoutShareServer.Controllers
             return JsonConvert.DeserializeObject<NightscoutPebble>(contents);
         }
 
+        private List<NightscoutApiEntries> fetchNightscoutGlucoseEntries(string baseurl, int count = 3)
+        {
+            var url = $"{baseurl}/api/v1/entries.json?count={count}&units=mgdl&find[sgv][$gt]=0";
+            var client = new WebClient();
+
+            var contents = client.DownloadString(url);
+            return JsonConvert.DeserializeObject<List<NightscoutApiEntries>>(contents);
+        }
+
+
         public ActionResult Index(string sessionId, string minutes, string maxCount)
         {
             //the minutes parameter is often 1440 (24 hours), telling you how long back you should do the search
@@ -77,14 +87,15 @@ namespace NightscoutShareServer.Controllers
 
 
            
-            NightscoutPebble nsglucose = null;
+            //NightscoutPebble nsglucose = null;
+            List<NightscoutApiEntries> nsglucose = null;
             Exception lasterror = null;
             var i = 0;
             do
             {
                 try
                 {
-                    nsglucose = this.fetchNightscoutPebbleData(Config.NsHost, count);
+                    nsglucose = this.fetchNightscoutGlucoseEntries(Config.NsHost, count);
                     lasterror=null;
                 }
                 catch (Exception err)
@@ -100,9 +111,10 @@ namespace NightscoutShareServer.Controllers
             }
             var shareglucose = new List<ShareGlucose>();
 
-            foreach (var entry in nsglucose.bgs)
+            foreach (var entry in nsglucose)
             {
-                var glucosedate = DateTimeOffset.FromUnixTimeMilliseconds(entry.datetime).DateTime;
+                var glucosedate = DateTimeOffset.FromUnixTimeMilliseconds(entry.date).DateTime
+                                                ;
                 decimal val;
                 Decimal.TryParse(entry.sgv, out val);
 
