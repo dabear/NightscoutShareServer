@@ -30,7 +30,7 @@ NS_Host: https://YOURSITE.azurewebsites.net
 Enable_Mocked_Mode: true
 ```
 Example from an azure portal:
-[![Skjermbilde-azuresettings.png](https://s8.postimg.org/jf7i24xn9/Skjermbilde-azuresettings.png)](https://postimg.org/image/cor0spahd/)
+![azure portal app settings](https://s9.postimg.org/l069hgihb/Application_settings_-_Microsoft_Azure.png)
 
 * Open your new ShareServer and follow the instructions there!
 
