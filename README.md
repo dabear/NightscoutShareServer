@@ -5,6 +5,8 @@ This will install a web server program called NightscoutShareServer, that when i
 If you're a nightscout user, you may have heared of the "Dexcom Bridge", where dexcom data is pulled into the nightscout site.
 *NightscoutShareServer* however does the reverse; data from nightscout is fetched and transformed to confirm to the dexcomshareserver protocol.
 
+[![nightscout_shareserver.png](https://s9.postimg.org/eqazuivy7/nightscout_shareserver.png)](https://postimg.org/image/5va5k075n/)
+
 # Installation
 
 # 1 Prerequisites
@@ -30,7 +32,7 @@ NS_Host: https://YOURSITE.azurewebsites.net
 Enable_Mocked_Mode: true
 ```
 Example from an azure portal:
-[![Skjermbilde-azuresettings.png](https://s8.postimg.org/jf7i24xn9/Skjermbilde-azuresettings.png)](https://postimg.org/image/cor0spahd/)
+![azure portal app settings](https://s9.postimg.org/l069hgihb/Application_settings_-_Microsoft_Azure.png)
 
 * Open your new ShareServer and follow the instructions there!
 
