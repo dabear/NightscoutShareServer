@@ -18,7 +18,7 @@ namespace NightscoutShareServer.Utils
         public static string DebugViewLogSecret => "IWannaSeeMyLogs";
 
 #else
-        public static string DebugViewLogSecret => Environment.GetEnvironmentVariable("Log_Secret") ?? "");
+        public static string DebugViewLogSecret => Environment.GetEnvironmentVariable("Log_Secret") ?? "";
         public static string NsHost => (Environment.GetEnvironmentVariable("NS_Host") ?? "").TrimEnd(new[] { '/' });
         public static bool EnableMockedGlucoseMode => Environment.GetEnvironmentVariable("Enable_Mocked_Mode")?.ToLower() == "true";
 #endif
