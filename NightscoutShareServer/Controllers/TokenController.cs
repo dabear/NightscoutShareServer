@@ -12,6 +12,7 @@ namespace NightscoutShareServer.Controllers
         {
             if (accountName.Length == 0 || password.Length == 0 || applicationId.Length == 0)
             {
+                Logger.LogInfo($"Invalid request, account or password was invalid");
                 return false;
             }
 
@@ -26,16 +27,19 @@ namespace NightscoutShareServer.Controllers
             //future: store the guid somewhere
             //For now we don't have any authentication, and accept any guid/sessionid for retrieving glucose
             //so just return it!
-
+            Logger.LogInfo($"Created GUID for user");
             return g;
         }
 
         public ActionResult Index(string accountName, string password, string applicationId)
         {
+            Logger.LogInfo("Accessing Token Index");
             accountName = accountName ?? "";
             password = password ?? "";
             applicationId = applicationId ?? "";
 
+            var account2 = accountName.Length > 0 ? accountName : "Unknown?";
+            Logger.LogInfo($"Token request for user {account2}");
             if (this.checkValidUser(accountName, password, applicationId))
             {
                 return Json(this.createGuidAndStoreIt(), JsonRequestBehavior.AllowGet);

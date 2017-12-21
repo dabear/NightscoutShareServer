@@ -57,8 +57,10 @@ namespace NightscoutShareServer.Controllers
 
         private List<NightscoutApiEntries> fetchNightscoutGlucoseEntries(string baseurl, int count = 3)
         {
+            
             var url = $"{baseurl}/api/v1/entries.json?count={count}&units=mgdl&find[sgv][$gt]=0";
             var client = new WebClient();
+            Logger.LogInfo($"Calling url {url}");
 
             var contents = client.DownloadString(url);
             return JsonConvert.DeserializeObject<List<NightscoutApiEntries>>(contents);
@@ -70,17 +72,19 @@ namespace NightscoutShareServer.Controllers
             //the minutes parameter is often 1440 (24 hours), telling you how long back you should do the search
             //In nightscout context it is mostly redundant as the maxCount will search as long back as needed.
             //we ignore that parameter
-
+            Logger.LogInfo("Accesing Glucose Index");
             sessionId = sessionId ?? "";
             int count = int.TryParse(maxCount, out count) ? count : 3;
 
             if (!this.CheckAuth(sessionId))
             {
+                Logger.LogInfo($"Error in checking sessionId");
                 return Json("Some error validating sessionid!!", JsonRequestBehavior.AllowGet);
             }
 
             if (Config.EnableMockedGlucoseMode)
             {
+                Logger.LogInfo($"Mocking up glucose value");
                 var glucose = mockupGlucoseValues();
                 return Content(this.encodeGlucose(glucose), "application/json");
             }
@@ -93,9 +97,12 @@ namespace NightscoutShareServer.Controllers
             var i = 0;
             do
             {
+                var n = i + 1;
                 try
                 {
+                    Logger.LogInfo($"Attempt {n} to fetch glucose from {Config.NsHost}");
                     nsglucose = this.fetchNightscoutGlucoseEntries(Config.NsHost, count);
+                    Logger.LogInfo($"Got {nsglucose.Count} entries from nightscout");
                     lasterror=null;
                 }
                 catch (Exception err)
