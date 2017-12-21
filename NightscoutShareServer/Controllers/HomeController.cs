@@ -7,11 +7,14 @@ using System.Web.Mvc.Ajax;
 using NightscoutShareServer.Utils;
 using System.IO;
 using System.Globalization;
+using System.Web.Hosting;
 
 namespace NightscoutShareServer.Controllers
 {
     public class HomeController : Controller
     {
+      
+
         public ActionResult Index()
         {
             var mvcName = typeof(Controller).Assembly.GetName();
@@ -39,7 +42,7 @@ namespace NightscoutShareServer.Controllers
         {
             if(logsecret != null && logsecret.Length > 11 && Config.DebugViewLogSecret == logsecret) {
                 var today = DateTime.Now.ToString("dddd", CultureInfo.InvariantCulture);
-                var logfile = Path.Combine("Logs",$"{today}.log");
+                var logfile = Path.Combine(HostingEnvironment.ApplicationPhysicalPath, "Logs",$"{today}.log");
 
                 try
                 {
