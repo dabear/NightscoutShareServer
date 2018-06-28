@@ -10,7 +10,9 @@ namespace NightscoutShareServer.Utils
         //public string _id { get; set; }
         //public string device { get; set; }
         public long date { get; set; }
-        public DateTime dateString { get; set; }
+        //this should be datetime, but for some reason in some cgm-in-the-cloud instances it is not
+        //we don't use the dateString for anything, so just convert it to string
+        public string dateString { get; set; }
         public string sgv { get; set; }
         //public double delta { get; set; }
         public string direction { get; set; }
