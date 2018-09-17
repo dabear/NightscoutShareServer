@@ -15,5 +15,10 @@
   <ItemGroup>
     <Compile Remove="Pages\Privacy.cshtml.cs" />
     <Compile Remove="Pages\Contact.cshtml.cs" />
+    <Compile Remove="Api\MetricsController.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Api\" />
+    <Folder Include="Utils\" />
   </ItemGroup>
 </Project>
