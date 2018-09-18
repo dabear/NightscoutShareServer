@@ -30,8 +30,10 @@
                 </div>
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
-                        <li><a asp-page="/Index">Home</a></li>
-                        <li><a asp-page="/About">About</a></li>
+                        <li><a href="/">Home</a></li>
+                        <li><a asp-controller="Token" asp-action="Get">Go to CustomShareServer Login</a></li>
+                        <li><a asp-controller="Glucose" asp-action="Get">Get glucose</a></li>
+                        <li>dotnetcore version - without logs</li>
 
                     </ul>
                 </div>
@@ -68,7 +70,7 @@
             </script>
             <script src="~/js/site.min.js" asp-append-version="true"></script>
         </environment>
-
+        <script src="~/js/pretty.js" asp-append-version="true"></script>
         @RenderSection("Scripts", required: false)
     </body>
 </html>
