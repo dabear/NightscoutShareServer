@@ -37,7 +37,7 @@ namespace NightscoutShareServer.Api
         // GET: api/values
         [HttpGet]
         [HttpPost]
-        public JsonResult Get(string accountName, string password, string applicationId)
+        public JsonResult Get([FromBody]string accountName, [FromBody]string password, [FromBody]string applicationId)
         {
             //Logger.LogInfo("Accessing Token Index");
             accountName = accountName ?? "";

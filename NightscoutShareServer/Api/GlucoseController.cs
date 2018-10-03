@@ -64,7 +64,7 @@ namespace NightscoutShareServer.Api
         }
 
 
-        public ActionResult Get(string sessionId, string minutes, string maxCount)
+        public ActionResult Get([FromBody]string sessionId, [FromBody]string minutes, [FromBody]string maxCount)
         {
             //the minutes parameter is often 1440 (24 hours), telling you how long back you should do the search
             //In nightscout context it is mostly redundant as the maxCount will search as long back as needed.
