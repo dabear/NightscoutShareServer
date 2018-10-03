@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using HybridModelBinding;
 using Microsoft.AspNetCore.Mvc;
+using NightscoutShareServer.Models;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -11,6 +13,7 @@ namespace NightscoutShareServer.Api
     [Route("ShareWebServices/Services/General/LoginPublisherAccountByName")]
     public class TokenController : Controller
     {
+        public TokenController() { }
         private bool checkValidUser(string accountName, string password, string applicationId)
         {
             if (accountName.Length == 0 || password.Length == 0 || applicationId.Length == 0)
@@ -37,18 +40,24 @@ namespace NightscoutShareServer.Api
         // GET: api/values
         [HttpGet]
         [HttpPost]
-        public JsonResult Get([FromBody]string accountName, [FromBody]string password, [FromBody]string applicationId)
+        public ActionResult Get([FromHybrid]TokenModel model)
         {
-            //Logger.LogInfo("Accessing Token Index");
-            accountName = accountName ?? "";
-            password = password ?? "";
-            applicationId = applicationId ?? "";
-
-            var account2 = accountName.Length > 0 ? accountName : "Unknown?";
-            //Logger.LogInfo($"Token request for user {account2}");
-            if (this.checkValidUser(accountName, password, applicationId))
+            if(model == null)
             {
-                Json(this.createGuidAndStoreIt());
+                return Json(
+                new
+                {
+                    Error = "true",
+                    Message = "You should specify an accountname, password and applicationid in a post to this endpoint"
+                }
+                );
+            }
+
+            
+          
+            if (this.checkValidUser(model.accountName??"", model.password ?? "", model.applicationId ?? ""))
+            {
+                
                 return Json(this.createGuidAndStoreIt());
             }
 
@@ -56,7 +65,7 @@ namespace NightscoutShareServer.Api
                 new
                 {
                     Error = "true",
-                    Message = "You should specify an accountname, password and applicationid in a post to this endpoint"
+                    Message = "Check that parameters to this endpoint is correct. CheckValidUser failed"
                 }
                 );
         }

@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using HybridModelBinding;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using NightscoutShareServer.Models;
 using NightscoutShareServer.Utils;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -14,7 +16,7 @@ namespace NightscoutShareServer.Api
     [Route("ShareWebServices/Services/Publisher/ReadPublisherLatestGlucoseValues")]
     public class GlucoseController : Controller
     {
-     
+
 
         private bool CheckAuth(string sessionId)
         {
@@ -64,16 +66,22 @@ namespace NightscoutShareServer.Api
         }
 
 
-        public ActionResult Get([FromBody]string sessionId, [FromBody]string minutes, [FromBody]string maxCount)
+       
+
+
+        [HttpGet]
+        [HttpPost]
+        public ActionResult Get([FromHybrid]GlucoseModel model)
         {
+            //return Content($"got GET with sessionId: {sessionId}, minutes: {minutes}, maxCount:{maxCount}");
             //the minutes parameter is often 1440 (24 hours), telling you how long back you should do the search
             //In nightscout context it is mostly redundant as the maxCount will search as long back as needed.
             //we ignore that parameter
             //Logger.LogInfo("Accesing Glucose Index");
-            sessionId = sessionId ?? "";
-            int count = int.TryParse(maxCount, out count) ? count : 3;
+            
+            int count = int.TryParse(model.maxCount??"3", out count) ? count : 3;
 
-            if (!this.CheckAuth(sessionId))
+            if (!this.CheckAuth(model.sessionId??""))
             {
                 //Logger.LogInfo($"Error in checking sessionId");
                 return Json("Some error validating sessionid!!");

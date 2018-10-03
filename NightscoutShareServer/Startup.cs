@@ -9,6 +9,8 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using HybridModelBinding;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 
 namespace NightscoutShareServer
 {
@@ -32,7 +34,19 @@ namespace NightscoutShareServer
             });
 
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddMvc(x =>
+            {
+                x.Conventions.Add(new HybridModelBinderApplicationModelConvention());
+            })
+            .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+            services.Configure<MvcOptions>(x =>
+            {
+                var serviceProvider = services.BuildServiceProvider();
+                var readerFactory = serviceProvider.GetRequiredService<IHttpRequestStreamReaderFactory>();
+
+                x.ModelBinderProviders.Insert(0, new DefaultHybridModelBinderProvider(x.InputFormatters, readerFactory));
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
