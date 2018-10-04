@@ -67,7 +67,7 @@ heroku create yourusernameshareserver
 ```
 docker tag yourusernameshareserver registry.heroku.com/yourusernameshareserver/web
 
-docker push registry.heroku.com/bjorningedia5shareserver/web
+docker push registry.heroku.com/yourusernameshareserver/web
 ```
 
 ## 3e) Set config and deploy (release) app to heroku
