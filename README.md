@@ -46,7 +46,7 @@ Deploying to heroku is somewhat more difficult, as it requires building the app 
 ```
 git clone https://github.com/dabear/NightscoutShareServer.git
 cd NightscoutShareServer/NightscoutShareServer
-git checkout dotnetcore
+
 ```
 ## 3b) Compile and build app locally
 ```
