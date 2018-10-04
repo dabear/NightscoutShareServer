@@ -53,6 +53,7 @@ cd NightscoutShareServer/NightscoutShareServer
 dotnet publish -c Release
 docker build -t yourusernameshareserver ./bin/Release/netcoreapp2.1/publish/
 ```
+Note: If you get Dockerfile related problems, please make sure that you copy the Dockerfile into the ./bin/Release/netcoreapp2.1/publish/ directory as well.
 
 ## 3c) Login to heroku and create app
 From the command line:
