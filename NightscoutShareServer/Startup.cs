@@ -38,7 +38,7 @@ namespace NightscoutShareServer
             {
                 x.Conventions.Add(new HybridModelBinderApplicationModelConvention());
             })
-            .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             services.Configure<MvcOptions>(x =>
             {
